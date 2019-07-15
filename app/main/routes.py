@@ -21,6 +21,10 @@ def before_request():
 
 
 @bp.route('/', methods=['GET', 'POST'])
+def route_default():
+    return render_template('landing.html')
+
+
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():

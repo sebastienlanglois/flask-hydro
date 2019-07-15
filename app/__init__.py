@@ -3,6 +3,8 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
+import psycopg2
+from app.dashboards import Dash_App1, Dash_App2
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -36,6 +38,8 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     moment.init_app(app)
     babel.init_app(app)
+
+
     app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
         if app.config['ELASTICSEARCH_URL'] else None
     app.redis = Redis.from_url(app.config['REDIS_URL'])
@@ -47,11 +51,17 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
+    from app.dashboards import bp as dash_bp
+    app.register_blueprint(dash_bp, url_prefix='/dashboards')
+
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
+
+    app = Dash_App1.Add_Dash(app)
+    app = Dash_App2.Add_Dash(app)
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:
@@ -87,6 +97,8 @@ def create_app(config_class=Config):
 
         app.logger.setLevel(logging.INFO)
         app.logger.info('Microblog startup')
+
+
 
     return app
 
