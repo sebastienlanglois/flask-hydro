@@ -1,27 +1,69 @@
-{% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% extends "layout.html" %}
 
-{% block app_content %}
-    <h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                <a href="{{ prev_url or '#' }}">
-                    <span aria-hidden="true">&larr;</span> {{ _('Newer posts') }}
-                </a>
-            </li>
-            <li class="next{% if not next_url %} disabled{% endif %}">
-                <a href="{{ next_url or '#' }}">
-                    {{ _('Older posts') }} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+{% block head %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <title>Nexus SaaS</title>
+    <!-- Bootstrap CSS -->
+<!--    <link href="{{ url_for('static', filename='nexus/css/bootstrap.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/linericon/style.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/css/font-awesome.min.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/owl-carousel/owl.carousel.min.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/lightbox/simpleLightbox.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/nice-select/css/nice-select.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/nice-select/css/nice-select.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/animate-css/animate.css') }}" rel="stylesheet">-->
+<!--    <link href="{{ url_for('static', filename='nexus/vendors/flaticon/flaticon.css') }}" rel="stylesheet">-->
+<!--    &lt;!&ndash; main css &ndash;&gt;-->
+
+    <link href="{{ url_for('static', filename='nexus/css/style2.css') }}" rel="stylesheet">
+<!--    <link href="{{ url_for('static', filename='nexus/css/responsive.css') }}" rel="stylesheet">-->
+
+</head>
 {% endblock %}
+
+{% block content %}
+    <section class="home_banner_area">
+        <div class="banner_inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="banner_content">
+                            <h2>Hydro Data  <br />at Your Fingertips</h2>
+                            <p>We deliver easy access to high-quality water, weather and environmental data from the world’s leading providers.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="text-align:center; padding-bottom: 600px;">
+                            <a class="banner_btn" href="#">Get Started</a>
+                            <a class="banner_btn2" href="#">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+<script src="{{ url_for('static', filename='nexus/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/stellar.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/vendors/lightbox/simpleLightbox.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/vendors/isotope/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/vendors/isotope/isotope-min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/vendors/owl-carousel/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/jquery.ajaxchimp.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/vendors/counter-up/jquery.waypoints.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='nexus/vendors/counter-up/jquery.counterup.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/mail-script.js') }}"></script>
+
+
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="{{ url_for('static', filename='nexus/js/gmaps.min.js') }}"></script>
+<script src="{{ url_for('static', filename='nexus/js/theme.js') }}"></script>

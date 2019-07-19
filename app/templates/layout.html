@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Hydrologie</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Css link -->
+		<style>
+		  .upStuff{
+			  display:none;
+		  }
+		</style>
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/icon.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+	    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/Leaflet.Coordinates-0.1.5.css')}}">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.2/dist/leaflet.draw.css" />
+		<!-- Leaflet Drawing Plugin: https://github.com/codeofsumit/leaflet.pm -->
+
+		<script type="text/javascript" src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/mathjs@5.4.2/dist/math.min.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+	</head>
+
+	{% block head %}
+	{% endblock %}
+
+	<body id="top">
+
+		<div class="container" style="height: 5.5vh;background-color:#f6f6f6;">
+			<button type="button" id="sidebarCollapse" class="btn" style="margin-left:2vh;margin-top:1vh;">
+				<i class="fas fa-align-left"></i>
+			</button>
+			<h4 style="position: absolute; left: 80px; top: 13px">
+				{{ _('Hi, %(username)s!', username=current_user.username) }}
+			</h4>
+						<!-- main nav -->
+<!--			<nav class="collapse navbar-collapse navbar-right" role="navigation" >-->
+<!--				<ul id="nav" class="nav navbar-nav menu ">-->
+<!--					<div class="modal" >&lt;!&ndash; Place at bottom of page &ndash;&gt;</div>-->
+<!--					<li><a href="#map">Map</a></li>-->
+<!--					<li><a href="#tableau">Tableaux</a></li>-->
+<!--					<li><a href="#portfolio">Comparaisons</a></li>-->
+<!--					<li style="color:#00008b;font-weight: bold;"><a href="#contact-form">Connexion</a></li>-->
+<!--				</ul>-->
+<!--			</nav>-->
+
+			<nav class="collapse navbar-collapse navbar-right" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<!--						<ul class="nav navbar-nav">-->
+<!--							<li><a href="{{ url_for('dashboards.app1_template') }}">{{ _('App1') }}</a></li>-->
+<!--							<li><a href="{{ url_for('dashboards.app2_template') }}">{{ _('App2') }}</a></li>-->
+<!--						</ul>-->
+<!--						{% if g.search_form %}-->
+<!--						<form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">-->
+<!--							<div class="form-group">-->
+<!--								{{ g.search_form.q(size=20, class='form-control', placeholder=g.search_form.q.label.text) }}-->
+<!--							</div>-->
+<!--						</form>-->
+						{% endif %}
+						<ul class="nav navbar-nav navbar-right">
+							{% if current_user.is_anonymous %}
+							<li><a href="{{ url_for('auth.login') }}">{{ _('Login') }}</a></li>
+							{% else %}
+							<li>
+								<a href="{{ url_for('main.messages') }}">{{ _('Messages') }}
+									{% set new_messages = current_user.new_messages() %}
+									<span id="message_count" class="badge"
+										  style="visibility: {% if new_messages %}visible
+															 {% else %}hidden{% endif %};">
+										{{ new_messages }}
+									</span>
+								</a>
+							</li>
+							<li><a href="{{ url_for('main.user', username=current_user.username) }}">{{ _('Profile') }}</a></li>
+							<li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<!-- /main nav -->
+
+		</div>
+
+		<div class="wrapper">
+			<!-- Sidebar  -->
+			<nav id="sidebar">
+				<div class="sidebar-header">
+				</div>
+				<ul class="list-unstyled components">
+					<li class="">
+						<a href="/index" class="dropdown-toggle">
+							<i class="fas fa-home fa-3x" style = ""></i>
+							Accueil
+						</a>
+					</li>
+					<li>
+						<a href="#pageSubmenudata" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+							<i class="fas fa-database fa-3x"></i>
+							Données
+						</a>
+						<ul class="collapse list-unstyled" id="pageSubmenudata">
+							<li>
+								<a href="{{ url_for('dashboards.app1_template') }}">Page 1</a>
+							</li>
+							<li>
+								<a href="#">Page 2</a>
+							</li>
+							<li>
+								<a href="#">Page 3</a>
+							</li>
+						</ul>
+						<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+							<i class="fas fa-toolbox fa-3x"></i>
+							Outils
+						</a>
+						<ul class="collapse list-unstyled" id="pageSubmenu">
+							<li>
+								<a href="/outils/decoupage_bassin">Découpage de bassins versants</a>
+							</li>
+							<li>
+								<a href="#">Page 2</a>
+							</li>
+							<li>
+								<a href="#">Page 3</a>
+							</li>
+						</ul>
+						<a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+							<i class="fas fa-copy fa-3x"></i>
+							Études
+						</a>
+						<ul class="collapse list-unstyled" id="pageSubmenu2">
+							<li>
+								<a href="/etudes/series_temporelles">Séries temporelles</a>
+							</li>
+							<li>
+								<a href="#">Page 2</a>
+							</li>
+							<li>
+								<a href="#">Page 3</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-question fa-3x"></i>
+							FAQ
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fas fa-paper-plane fa-3x"></i>
+							Contact
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<!-- Page Content  -->
+			<div id="content">
+				<div>
+					{% block content %}{% endblock %}
+				</div>
+			 </div>
+		</div>
+
+
+		<!-- load Js -->
+		<script type=text/javascript>
+          $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+		  <!-- Font Awesome JS -->
+
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+		<script type=text/javascript src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<!--		<script type="text/javascript" src="{{ url_for('static', filename='js/waypoints.min.js') }}"></script>-->
+		<!--<script type="text/javascript" src="{{ url_for('static', filename='js/lightbox.js') }}"></script>-->
+		<!--<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>-->
+		<!--<script type="text/javascript" src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>-->
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.mixitup.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollUp.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.nav.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/leaflet-heat.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/choropleth.js') }}"></script>
+		<!--<script type="text/javascript" src="http://leaflet.github.io/Leaflet.markercluster/example/realworld.388.js"></script>-->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/mtl-prel.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/Leaflet.CountrySelect.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/flow_acc.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/Leaflet.Coordinates-0.1.5.min.js') }}"></script>
+		<script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
+		integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
+		crossorigin=""></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+		<script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+		<script src="https://cdn.rawgit.com/mejackreed/Leaflet-IIIF/v2.0.1/leaflet-iiif.js"></script>
+    	<script src="https://unpkg.com/leaflet-draw@1.0.2/dist/leaflet.draw.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/leaflet.browser.print.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/dom-to-image.min.js') }}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/togeojson.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/leaflet.filelayer.js') }}"></script>
+		<script src="https://unpkg.com/shp-write@latest/shpwrite.js"></script>
+		<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-image/v0.0.4/leaflet-image.js'></script>
+
+		<script type="text/javascript" src="{{ url_for('static', filename='js/maps.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+		<script type="text/javascript">
+			$body = $("body");
+
+			$(document).on({
+				ajaxStart: function() { $body.addClass("loading");    },
+				 ajaxStop: function() { $body.removeClass("loading"); }
+			});
+
+		</script>
+	</body>
+</html>
