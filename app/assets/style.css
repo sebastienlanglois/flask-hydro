@@ -80,6 +80,28 @@ body {
   align-items: center;
 }
 
+#btn-1{
+  align-items: center;
+  background-color:#E59400
+}
+
+#btn-2{
+  align-items: center;
+  background-color:#7BCFED
+}
+
+#btn-4{
+  float: right; !important
+}
+
+#btn-3{
+  float: right;
+}
+
+
+
+
+
 #learn-more-button {
   text-align: center;
   height: 100%;
@@ -136,4 +158,25 @@ body {
 #mainContainer {
   display: flex;
   flex-direction: column;
+}
+
+.rc-slider-mark-text {
+    transform: rotate(-45deg);
+
+    /* Legacy vendor prefixes that you probably don't need... */
+
+    /* Safari */
+    -webkit-transform: rotate(-45deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-45deg);
+
+    /* IE */
+    -ms-transform: rotate(-45deg);
+
+    /* Opera */
+    -o-transform: rotate(-45deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }

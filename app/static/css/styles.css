@@ -69,8 +69,8 @@ a:focus {
     text-align: center;
     background-blend-mode: darken;
     color: #fff;
-    min-height: 94.4vh;
-    background-image: linear-gradient(#000000,#00253c);
+    min-height: 100vh;
+    background-image: linear-gradient(#071389,#0B1C47);
 }
 
 /* Shrinking the sidebar from 250px to 80px and center aligining its content*/
@@ -78,8 +78,8 @@ a:focus {
 
     min-width: 250px;
     max-width: 250px;
-    min-height: 94.4vh;
-    background-image: linear-gradient(#000000,#00253c);
+    min-height: 100vh;
+    background-image: linear-gradient(#071389,#0B1C47);
     background-blend-mode: darken;
     color: #fff;
     transition: all 0.3s;
@@ -167,7 +167,7 @@ a:focus {
     padding: 10px;
     font-size: 0.85em;
     display: block;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(7, 19, 137, 0);
     text-align: center;
 }
 
@@ -233,9 +233,22 @@ a.article:hover {
 #content {
     width: 100%;
     padding: 0px;
-    min-height: 94.4vh;
+    min-height: 90vh;
     min-width: 100vh;
     transition: all 0.3s;
+
+}
+
+#sidebarCollapse {
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.5em;
+    background: #071389;
+}
+
+#sidebarCollapse:hover {
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.5em;
+    background: #fff !important;
 }
 
 /* ---------------------------------------------------

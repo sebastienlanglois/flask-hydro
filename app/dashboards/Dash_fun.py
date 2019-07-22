@@ -39,7 +39,7 @@ def apply_layout_with_auth(app, layout):
                 html.Div(session_id, id='session_id', style={'display': 'none'}),
                 layout
             ])
-        return html.Div('403 Access Denied')
+        return layout
 
     #app.config.supress_callback_exceptions = True
     app.layout = serve_layout
