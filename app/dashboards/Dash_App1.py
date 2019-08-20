@@ -158,7 +158,7 @@ layout = html.Div([
                     ],
                     className="pretty_container four columns",
                     style={
-                        'overflowX': 'scroll', 'overflowY': 'scroll',
+                        'overflowX': 'auto', 'overflowY': 'auto',
                     }
                 ),
 
@@ -209,7 +209,7 @@ layout = html.Div([
                 ],
                 className="pretty_container four columns",
                 style={
-                    'overflowX': 'scroll', 'overflowY': 'scroll',
+                    'overflowX': 'auto', 'overflowY': 'auto',
                 },
 
             ),
