@@ -2,7 +2,7 @@ from flask import jsonify, request, url_for, g, abort
 from app.models import User
 from app.api import bp
 from app.api.auth import token_auth
-from app.lib.db_create.Physio import create_physio_from_polygons
+from app.locallib.db_create.Physio import create_physio_from_polygons
 import pandas as pd
 
 
