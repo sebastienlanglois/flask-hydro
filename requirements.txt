@@ -115,7 +115,7 @@ pytz==2019.1
 pyviz-comms==0.7.2
 PyWavelets==1.0.1
 pyxdg==0.25
-PyYAML==5.1
+PyYAML==5.4
 pyzmq==17.1.2
 qtconsole==4.4.3
 rasterio==1.0.13
